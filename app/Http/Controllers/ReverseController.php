@@ -24,7 +24,7 @@ class ReverseController extends Controller
         $data->text = $request->text;
 
         $validator = Validator::make($request->all(), [
-            'text' => 'required'
+            'text' => 'required|min:4|max:20'
         ]);
 
         if ($validator->fails()) {
@@ -60,6 +60,9 @@ class ReverseController extends Controller
 
     private function reverseLocal($text): string
     {
+        if ($text == 'hello') {
+            return 'Hi, I am local';
+        }
         return implode(array_reverse(str_split($text)));
     }
 
