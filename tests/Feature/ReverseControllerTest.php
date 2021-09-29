@@ -84,7 +84,7 @@ class ReverseControllerTest extends TestCase
 
     public function testReverseJson()
     {
-        $response = $this->getJson('/reverse?text=hejsa');
+        $response = $this->getJson('/reverse?text=hejsa&json=1');
         $response->assertStatus(200);
         $response->assertJson(["reversed" => "asjeh"]);
     }

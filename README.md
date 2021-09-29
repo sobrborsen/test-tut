@@ -18,11 +18,10 @@ Endepunktet er: `/reverse?text=<bruger input>[&service=local|laravel|guzzle]`
 
 `service` parameteren kan ikke bruges i browseren, da det er en fiktiv service, men man kan godt teste op i mod den.
 
-Hvis request content_type er `application/json` får man json data tilbage.
+Hvis request parameteren `json == 1` får man json data tilbage.
 
 Opgaven er at ændre følgende regler:
- - `text` skal være mindst 4 tegn og max 20 tegn og hvis `text` ikke er
- inden dette interval, vises en fejlmeddelse
+ - `text` skal være mindst 4 tegn og max 20 tegn og hvis `text` ikke er indenfor dette interval, vises en fejlmeddelse
  - når `text` er 'hello' og `service` er:
     - `local` eller ikke angivet, skal den svarer med `Hi, I am local`
     - `laravel`, skal den svarer med `Hi, I am laravel`
@@ -40,8 +39,7 @@ Hvorfor overhovedet test din kode? Min påstand er at:
  - du hjælper din kollega, så vedkommende ikke kommer til at lave utilsigtede fejl når koden skal ændres
  - større sikkerhed ved automatisk deployment
  
- Med i Laravel pakken er der god test faciliteter, selv når man skal snakke
- med andre remote services.
+ Med i Laravel pakken er der god test faciliteter, selv når man skal snakke med andre remote services.
 
  Med github actions kan vi kører automatisk test og kode dækning når man merger til develop, og som reviewer tjekker man selvfølelig om alle
  tests kan kører og at test dækningen er 100% :smiley: 

@@ -40,8 +40,8 @@ class ReverseController extends Controller
 
     private function render(Request $request, stdClass $data)
     {
-        if ($request->getContentType() == 'json') {
-            return json_encode($data);
+        if (isset($request->json)) {
+            return response()->json($data);
         }
         return view('index', (array)$data);
     }
