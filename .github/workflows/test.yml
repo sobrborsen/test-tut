@@ -9,7 +9,7 @@ jobs:
   test-unit:
     defaults:
       run:
-        working-directory: .
+        working-directory: resources/laravel
 
     runs-on: ubuntu-latest
 

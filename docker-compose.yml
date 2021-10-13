@@ -1,0 +1,11 @@
+version: '3'
+services:
+  test-tut:
+    build: .
+    working_dir: /var/www/service/
+    volumes:
+        - ./resources/laravel:/var/www/service/
+        - ./resources/apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+    ports:
+        - "8000:80"
+        - "8443:443"

@@ -1,0 +1,22 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "axios": "^0.21",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "nyc": "^15.1.0",
+        "postcss": "^8.1.14",
+        "puppeteer": "^1.10.0",
+        "puppeteer-to-istanbul": "^1.4.0",
+        "qunit-puppeteer-reporter": "github:sobrborsen/qunit-puppeteer-reporter"
+    }
+}

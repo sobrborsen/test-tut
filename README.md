@@ -1,19 +1,31 @@
 # Øvelse i at lave test kode
 
+Dette projekt har til opgave at prøve sig selv af med at skrive test kode
 ## Appen
 Dette er en standard Laravel applikation, og det den kan, er at vende det indtastede ord om, så fx. "hej" bliver til "jeh".
+Du enten kører det lokalt eller med docker.
 
+### Docker
+- App kan afprøves i test laravel version på din-docker:port
+- En VUE version kan afprøves på din-docker:port/vue
+- Ui tests ses på din-docker:port/testui
+- `make image up` for at starte den.
+- `make test` for at køre unittest
+- `make coverage` for at køre unittest og coverage i text format
+- `make coverage-report` for at køre unittest og detaleret coverage report i html, som kan ses på din-docker:port/coverage
+
+### Lokalt
 Den kan afprøves ved at `make serve` og rette browseren mod `http://localhost:8000`
 
-Formålet er denne app er at vise, hvordan du kan teste sådan et system og integrerer det med github.
+Ui test køres med `make testui` and rette browseren med `http://localhost:8000`
 
-Du kan kører testen med `make test` og du tjekke hvor godt din koden er dækket
-af tests med `make coverage`. 
-En mere detaljeret dækning fås med `make coverage-html`, hvorefter
-du kan åbne `build/index.html` i browseren, og få mange flere
-informationer om din testdækningen.
+Man kan de samme ting som under docker og desuden man kan køre ui coverage med `make ui-coverage`.
+Sidstnævnte virker desværre ikke i docker.
 
-## Opgaven
+## Opgave 1
+UI testene er ikke færdig, men du ser det i mappen tests/ui hvor du finde eksempel på noget der virker.
+
+## Opgave 2
 Endepunktet er: `/reverse?text=<bruger input>[&service=local|laravel|guzzle]`
 
 `service` parameteren kan ikke bruges i browseren, da det er en fiktiv service, men man kan godt teste op i mod den.
@@ -34,7 +46,7 @@ færdig laver du en PR med `sobr` som reviewer.
 
 Hvorfor overhovedet test din kode? Min påstand er at:
  - du sikre at koden opfører sig som tænkt
- - code coverage tjekker om du har kode som ikke er testet og dermed en mulig fejlkilde
+ - code coverage tjekker om du har kode, som ikke er testet og dermed en mulig fejlkilde
  - sikre fremtidige ændringer og refaktoreringer stadigvæk har det ønskede resultat
  - du hjælper din kollega, så vedkommende ikke kommer til at lave utilsigtede fejl når koden skal ændres
  - større sikkerhed ved automatisk deployment
@@ -46,5 +58,3 @@ Hvorfor overhovedet test din kode? Min påstand er at:
 
  Hvis man har kode som ikke skal med i test dækningen kan du læse om
  det [her](https://phpunit.readthedocs.io/en/9.5/code-coverage-analysis.html#ignoring-code-blocks) men brug det omtanke det kan skjule potentielle fejl.
-
-
