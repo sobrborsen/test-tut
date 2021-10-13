@@ -138,7 +138,7 @@ class ReverseControllerTest extends TestCase
 
     public function testErrorJson()
     {
-        $response = $this->getJson('/reverse?text=hej');
+        $response = $this->getJson('/reverse?text=hej&json=1');
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'errors');
     }
