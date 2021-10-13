@@ -43,7 +43,7 @@ class ReverseControllerTest extends TestCase
         $response->assertDontSeeText('Error');
     }
 
-    public function testReverseHttp()
+    public function testReverseLaravel()
     {
         $fixture = json_encode((object)["reversed" => "asjeh"]);
         Http::fake(function ($request) use ($fixture) {
@@ -55,7 +55,19 @@ class ReverseControllerTest extends TestCase
         $response->assertDontSeeText('Error');
     }
 
-    public function testReverseHttpFail()
+    public function testHelloLaravel()
+    {
+        $fixture = (object)["reversed" => "Hi, I am http"];
+        Http::fake(function ($request) use ($fixture) {
+            return Http::response(json_encode($fixture), 200);
+        });
+        $response = $this->get('/reverse?text=hello&service=laravel');
+        $response->assertStatus(200);
+        $response->assertSeeText($fixture->reversed);
+        $response->assertDontSeeText('Error');
+    }
+
+    public function testReverseLaravelFail()
     {
         Http::fake(function ($request) {
             return Http::response(null, 500);
@@ -75,6 +87,17 @@ class ReverseControllerTest extends TestCase
         $response->assertDontSeeText('Error');
     }
 
+    public function testHelloGuzzle()
+    {
+        $fixture = (object)["reversed" => "Hi, I am guzzle"];
+        $this->handler->append(new Response(200, [], json_encode($fixture)));
+
+        $response = $this->get('/reverse?text=hejsa&service=guzzle');
+        $response->assertStatus(200);
+        $response->assertSeeText($fixture->reversed);
+        $response->assertDontSeeText('Error');
+    }
+
     public function testReverseGuzzleFail()
     {
         $this->handler->append(new Response(500));
@@ -82,10 +105,41 @@ class ReverseControllerTest extends TestCase
         $response->assertStatus(500);
     }
 
+    public function testToShort()
+    {
+        $response = $this->get('/reverse?text=hej');
+        $response->assertStatus(200);
+        $response->assertSeeTextInOrder(['Error', '4 characters']);
+        $response->assertDontSeeText('Reversed');
+    }
+
+    public function testToLong()
+    {
+        $response = $this->get('/reverse?text=Dette+er+en+tekst+fra+de+varme+lande');
+        $response->assertStatus(200);
+        $response->assertSeeTextInOrder(['Error', '20 characters']);
+        $response->assertDontSeeText('Reversed');
+    }
+
+    public function testToHello()
+    {
+        $response = $this->get('/reverse?text=hello');
+        $response->assertStatus(200);
+        $response->assertSeeText('Reversed: Hi, I am local');
+        $response->assertDontSeeText('Error');
+    }
+
     public function testReverseJson()
     {
         $response = $this->getJson('/reverse?text=hejsa&json=1');
         $response->assertStatus(200);
         $response->assertJson(["reversed" => "asjeh"]);
+    }
+
+    public function testErrorJson()
+    {
+        $response = $this->getJson('/reverse?text=hej&json=1');
+        $response->assertStatus(200);
+        $response->assertJsonCount(1, 'errors');
     }
 }
